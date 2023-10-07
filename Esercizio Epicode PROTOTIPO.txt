@@ -1,0 +1,206 @@
+
+
+Esercizio Prototipo, ho provato ad aggiungere un menu in cui salvare le stringhe e poterlo visitare dal menu principale, ma non sono riuscito a farlo funzionare a dovere.
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>		//inclusa la libreria per poter utilizzare la funzione exit
+
+
+void menu ();
+void moltiplica ();
+void dividi ();
+void ins_string ();
+void menu_stringa();  //aggiunto un menu per rivedere le stringhe salvate
+
+
+int main ()
+{
+  char scelta = { '\0' };
+  menu ();
+  
+  
+  
+  while (1)
+    {				/*aggiunto un ciclo while per permettere di tornare 
+				   al menu principale e ricominciare il processo */
+
+      scanf (" %c", &scelta);	//sostituita %d con %c
+
+      switch (scelta)
+	{
+	case 'A':
+	  moltiplica ();
+	  break;
+	case 'B':
+	  dividi ();
+	  break;
+	case 'C':
+	  ins_string ();
+	  break;
+        case 'D':
+          menu_stringa();
+	default:
+	  printf ("Il carattere inserito è sconosciuto, riprovare\n\n\n");
+	}
+    }
+  /*non viene considerato il caso in cui un utente utilizzi un
+     carattere diverso da quelli proposti, quindi aggiunto un default */
+  return 0;
+
+
+}
+
+void menu ()
+{
+
+  printf
+    ("Benvenuto, sono un assitente digitale, posso aiutarti a sbrigare alcuni compiti\n");
+  printf ("Come posso aiutarti?\n");
+  printf
+    ("A >> Moltiplicare due numeri\nB >> Dividere due numeri\nC >> Inserire una stringa\n\n\n");
+
+}
+
+
+void moltiplica ()
+{
+
+  while (1)
+    {				// aggiunto un ciclo interno while per la ripetizione in loop delle opzioni
+      float a, b = 0;		//modifcata la variabile da short int a int
+
+      printf ("Inserisci i due numeri da moltiplicare:");
+      scanf ("%f", &a);		//sostituite %d con %f
+      scanf ("%f", &b);
+
+      float prodotto = a * b;
+
+      printf ("Il prodotto tra %.2f e %.2f e': %.2f\n", a, b, prodotto);	//aggiunto \n per visibilitC 
+
+
+/*aggiunto il ciclo do-while per permettere ad 'A' di tornare al menC9 principale
+stessa cosa fatta nei void dividi e void stringa*/
+
+      char ritorno = { '\0' };
+      do
+	{
+	  printf
+	    ("Posso esserti utile in qualcos'altro?\n A >> Si \n B >> No\n");
+	  scanf (" %c", &ritorno);
+
+	  switch (ritorno)
+	    {
+	    case 'A':
+	      return menu ();
+	      break;
+	    case 'B':
+	      printf ("Arrivederci!\n");
+	      exit (0);		//inserita la funzione exit per terminare il processo tramite B
+	    default:
+	      printf ("Il carattere inserito è sconosciuto, riprovare\n\n\n");
+	    }
+
+	}
+      while (ritorno != 'A' && ritorno != 'B'); /*condizione inserita per non far terminare il processo
+                                                  fintanto che ritorno non sia diverso da A e B, condizione
+                                                  possibile grazie all'operatore AND*/
+
+    }
+}
+
+void dividi ()
+{
+  float a, b = 0;
+  printf ("Inserisci il numeratore:");
+  scanf ("%f", &a);
+  printf ("Inserisci il denumeratore:");
+  scanf ("%f", &b);
+
+  if (b == 0)
+    {				//aggiunto ciclo if/else nel caso il denom. sia 0
+      printf ("La divisione non C( fattibile\n");
+    }
+  else
+    {
+      float divisione = a / b;	//uso errato di %, si usa / per la divisione
+      printf ("La divisione tra %.2f e %.2f e': %.2f\n", a, b, divisione);
+    }
+  char ritorno = { '\0' };
+  do
+    {
+      printf ("Posso esserti utile in qualcos'altro?\n A >> Si \n B >> No\n");
+      scanf (" %c", &ritorno);
+
+      switch (ritorno)
+	{
+	case 'A':
+	  return menu ();
+	  break;
+	case 'B':
+	  printf ("Arrivederci!\n");
+	  exit (0);
+	default:
+	  printf ("Il carattere inserito è sconosciuto, riprovare\n\n\n");
+	}
+
+    }
+  while (ritorno != 'A' && ritorno != 'B');
+
+}
+
+
+void ins_string ()
+{
+    
+  char salvare[10];
+  char stringa[10];
+  printf ("Inserisci la stringa (max 9 caratteri):\n");
+  scanf ("%9s", &stringa);    //fornito un limite ai caratteri basato sul limite dell'array per non andare in overflow
+  printf("Salvare la stringa: %s ?\n A >> Per salvare\n B >> Per scrivere una nuova stringa\n", stringa);
+  scanf(" %s", &salvare);
+  
+  if(salvare=='A'){
+     printf("Stringa salvata\n");
+}
+  
+    char ritorno = { '\0' };
+  do
+    {
+      printf ("Posso esserti utile in qualcos'altro?\n A >> Si \n B >> No\n");
+      scanf (" %c", &ritorno);
+      
+      switch (ritorno)
+	{
+	case 'A':
+	  return menu ();
+	  break;
+	case 'B':
+	  printf ("Arrivederci!\n");
+	  exit (0);
+	default:
+	  printf ("Il carattere inserito è sconosciuto, riprovare\n\n\n");
+	}
+
+    }
+  while (ritorno != 'A' && ritorno != 'B');
+
+
+void menu_stringa(){
+    
+    int nStringhe=0;
+    
+     printf("Stringhe salvate:\n");
+    for (int i = 0; i < nStringhe; i++) {
+        printf("%d: %s\n", i + 1, stringa[i]);
+    }
+}
+
+
+
+}
+

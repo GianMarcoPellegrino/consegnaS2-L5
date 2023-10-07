@@ -1,0 +1,211 @@
+#include <stdio.h>
+#include <stdlib.h>		//inclusa la libreria per poter utilizzare la funzione exit
+
+
+void menu ();
+void moltiplica ();
+void dividi ();
+void ins_string ();
+
+
+
+int main ()
+{
+  char scelta;
+  menu ();
+  
+  
+  
+  while (1)        	/*aggiunto un ciclo while in loop che permette di tornare 
+				   al menu principale e ricominciare il processo */
+    {			
+
+      scanf (" %c", &scelta);	//sostituita %d con %c
+                                
+                                /*aggiunti i case con lettere minuscole,
+                                non ho trovato un modo più efficiente per risolvere il problema*/
+      switch (scelta)
+	{
+	case 'A':               
+	case 'a':
+	  moltiplica ();
+	  break;
+	case 'B':
+	case 'b':
+	  dividi ();
+	  break;
+	case 'C':
+	case 'c':
+	  ins_string ();
+	  break;
+	case 'D':
+	case 'd':
+	  printf("Arrivederci!");
+	  exit(0);
+	                            /*non viene considerato il caso in cui un utente utilizzi un
+                               carattere diverso da quelli proposti, quindi aggiunto un default */
+	  
+	default:
+	  printf ("Il carattere inserito è sconosciuto, riprovare\nA >> Moltiplicare due numeri\nB >> Dividere due numeri\nC >> Inserire una stringa\nD >> Esci\n\n\n");
+	}
+    }
+  
+  return 0;
+
+
+}
+
+void menu ()
+{
+
+  printf
+    ("Benvenuto, sono un assistente digitale, posso aiutarti a sbrigare alcuni compiti\n"); //refuso di sintassi, assistente invece che assitente
+  printf ("Come posso aiutarti?\n");
+  printf
+    ("A >> Moltiplicare due numeri\nB >> Dividere due numeri\nC >> Inserire una stringa\nD >> Esci\n\n\n");
+
+}
+
+
+void moltiplica ()
+{
+
+  while (1)          // aggiunto un ciclo interno while per la ripetizione in loop delle opzioni
+    {				
+      float a, b = 0;		//modifcata la variabile da short int a int
+
+      printf ("Inserisci il numero:");
+      scanf("%f", &a);                      //sostituite %d con %f
+      printf ("Inserisci il numero:");      //modificata la sintassi per migliorare accessibilità
+      scanf("%f", &b);
+      
+      
+      float prodotto = a * b;
+     
+
+      printf ("Il prodotto tra %.2f e %.2f e': %.2f\n\n", a, b, prodotto); 
+
+
+
+/*aggiunto il ciclo do-while per permettere ad 'A' di tornare al menù principale
+stessa cosa fatta nei void dividi e void stringa*/
+
+      char ritorno;
+      do
+	{
+	  printf
+	    ("Posso esserti utile in qualcos'altro?\n A >> Si \n B >> No\n");
+	  scanf (" %c", &ritorno);
+
+	  switch (ritorno)
+	    {
+	    case 'A':
+	    case 'a':
+	      return menu ();
+	      break;
+	    case 'B':
+	    case 'b':
+	      printf ("Arrivederci!\n");
+	      exit (0);		//inserita la funzione exit per terminare il processo tramite B
+	    default:
+	      printf ("Il carattere inserito è sconosciuto.\n\n");
+	    }
+
+	}
+      while (ritorno != 'A' && ritorno != 'B'); /*condizione inserita per non far terminare il processo
+                                                  fintanto che ritorno non sia diverso da A e B, condizione
+                                                  possibile grazie all'operatore AND*/
+
+    }
+}
+
+void dividi ()
+{
+  float a, b = 0;
+  printf ("Inserisci il numeratore:");
+  scanf ("%f", &a);
+  printf ("Inserisci il denumeratore:");
+  scanf ("%f", &b);
+
+  if (b == 0)
+    {				//aggiunto ciclo if/else nel caso il denom. sia 0
+      printf ("\nLa divisione non è fattibile\n\n");
+    }
+  else
+    {
+      float divisione = a / b;	//uso errato di %, si usa / per la divisione
+      printf ("La divisione tra %.2f e %.2f e': %.2f\n\n", a, b, divisione);
+    }
+  char ritorno;
+  do
+    {
+      printf ("Posso esserti utile in qualcos'altro?\n A >> Si \n B >> No\n");
+      scanf (" %c", &ritorno);
+
+      switch (ritorno)
+	{
+	case 'A':
+	case 'a':
+	  return menu ();
+	  break;
+	case 'B':
+	case 'b':
+	  printf ("Arrivederci!\n");
+	  exit (0);
+	default:
+	  printf ("Il carattere inserito è sconosciuto.\n\n");
+	}
+
+    }
+  while (ritorno != 'A' && ritorno != 'B');
+
+}
+
+
+void ins_string ()
+{
+  int maxStringa=10;
+  int minStringa=0; 
+  char stringa[11];  //aumentato di uno la capacità dell'array per comprendere anche l'invio
+  printf ("Inserisci la stringa (max 10 caratteri):\n");
+  scanf ("%10s", &stringa);    //fornito un limite ai caratteri basato sul limite dell'array per non andare in overflow
+  printf("La stringa che hai creato è: %s.\n\n", stringa);
+  
+ /* 
+ Non sono riuscito a far funzionare la funzione
+ 
+ if(stringa>maxStringa){
+      printf("Stringa eccessivamente lunga.\n\n", maxStringa);
+  }
+  else(stringa<minStringa);{
+      printf("La stringa che hai creato è: %s.\n\n", stringa);
+  }
+  */
+  
+    char ritorno;
+  do
+    {
+      printf ("Posso esserti utile in qualcos'altro?\n A >> Si \n B >> No\n");
+      scanf (" %c", &ritorno);
+      
+      switch (ritorno)
+	{
+	case 'A':
+	case 'a':
+	  return menu ();
+	  break;
+	case 'B':
+	case 'b':
+	  printf ("Arrivederci!\n");
+	  exit (0);
+	default:
+	  printf ("Il carattere inserito è sconosciuto.\n\n");
+	}
+
+    }
+  while (ritorno != 'A' && ritorno != 'B');
+
+
+
+}
+
